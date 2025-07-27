@@ -13,6 +13,7 @@
     "bcrypt": "^6.0.0",
     "next": "15.4.4",
     "next-auth": "^4.24.11",
+    "prisma": "^6.12.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "uid": "^2.0.2"
@@ -27,7 +28,6 @@
     "@types/uuid": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.4",
-    "prisma": "^6.12.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -3,7 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "../../../generated/prisma";
 import bcrypt from "bcrypt";
 
-// Extend the Session and User types to include id and role
 declare module "next-auth" {
   interface Session {
     user: {
@@ -26,11 +25,18 @@ declare module "next-auth" {
 
 const prisma = new PrismaClient();
 
-async function sessionCallback({ session, token }: { session: Session; token: any }) {
+async function sessionCallback({
+  session,
+  token,
+}: {
+  session: Session;
+  token: any;
+}) {
   if (token) {
     if (session.user) {
       session.user.id = token.sub ?? "";
-      session.user.role = typeof token.role === "string" ? token.role : undefined;
+      session.user.role =
+        typeof token.role === "string" ? token.role : undefined;
     }
   }
   return session;
@@ -52,16 +58,24 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await prisma.pengguna.findUnique({
+        const user = await prisma.user.findUnique({
           where: { email: credentials?.email },
         });
 
         if (!user || !credentials?.password) return null;
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!isValid) return null;
 
-        return { id: user.id, name: user.name, email: user.email, role: user.role };
+        return {
+          id: user.id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        };
       },
     }),
   ],

@@ -1,0 +1,11 @@
+const CHUNK_PUBLIC_PATH = "server/app/api/bookings/route.js";
+const runtime = require("../../../chunks/[turbopack]_runtime.js");
+runtime.loadChunk("server/chunks/[root-of-the-server]__f76d9901._.js");
+runtime.loadChunk("server/chunks/c1b26_next_3d82720a._.js");
+runtime.loadChunk("server/chunks/75ea0_next-auth_7fb6f429._.js");
+runtime.loadChunk("server/chunks/5c63e_openid-client_c9efc47b._.js");
+runtime.loadChunk("server/chunks/144d0_jose_dist_node_cjs_2d079ce4._.js");
+runtime.loadChunk("server/chunks/node_modules__pnpm_f9a3d06a._.js");
+runtime.getOrInstantiateRuntimeModule("[project]/.next-internal/server/app/api/bookings/route/actions.js [app-rsc] (server actions loader, ecmascript)", CHUNK_PUBLIC_PATH);
+runtime.getOrInstantiateRuntimeModule("[project]/node_modules/.pnpm/next@15.4.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/bookings/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)", CHUNK_PUBLIC_PATH);
+module.exports = runtime.getOrInstantiateRuntimeModule("[project]/node_modules/.pnpm/next@15.4.4_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/bookings/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)", CHUNK_PUBLIC_PATH).exports;
