@@ -19,10 +19,17 @@ export async function PUT(request: NextRequest) {
   return NextResponse.json(updatedProperty);
 }
 
-export async function DELETE(
-  _: Request,
-  { params }: { params: { id: string } }
-) {
-  await prisma.property.delete({ where: { id: parseInt(params.id) } });
-  return NextResponse.json({ message: "Deleted" });
+export async function DELETE(request: NextRequest) {
+  const idParam = request.nextUrl.pathname.split("/").pop();
+  const id = parseInt(idParam ?? "");
+
+  if (isNaN(id)) {
+    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+  }
+
+  await prisma.property.delete({
+    where: { id },
+  });
+
+  return NextResponse.json({ message: "Property deleted" });
 }
