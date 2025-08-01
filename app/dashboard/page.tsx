@@ -5,13 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import Navbar from "../components/Navbar";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
-interface UserDashboardProps {
-  session: Session | null;
-}
+export default function UserDashboard() {
+  const { data: session } = useSession();
 
-export default function UserDashboard({ session }: UserDashboardProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
