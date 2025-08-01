@@ -8440,15 +8440,17 @@ module.exports = mod;
 "[project]/lib/auth.ts [app-route] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
+// lib/auth.ts
 __turbopack_context__.s({
     "authOptions": ()=>authOptions
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$2d$auth$40$4$2e$24$2e$11_next$40$15$2e$4_2ef98235e41d952b6c388698e8389d43$2f$node_modules$2f$next$2d$auth$2f$providers$2f$credentials$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next-auth@4.24.11_next@15.4_2ef98235e41d952b6c388698e8389d43/node_modules/next-auth/providers/credentials.js [app-route] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/prisma.ts [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$generated$2f$prisma$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/generated/prisma/index.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$externals$5d2f$bcrypt__$5b$external$5d$__$28$bcrypt$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/bcrypt [external] (bcrypt, cjs)");
 ;
 ;
 ;
+const prisma = new __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$generated$2f$prisma$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["PrismaClient"]();
 const authOptions = {
     providers: [
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$2d$auth$40$4$2e$24$2e$11_next$40$15$2e$4_2ef98235e41d952b6c388698e8389d43$2f$node_modules$2f$next$2d$auth$2f$providers$2f$credentials$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"])({
@@ -8464,50 +8466,45 @@ const authOptions = {
                 }
             },
             async authorize (credentials) {
-                if (!credentials?.email || !credentials?.password) return null;
-                const user = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].user.findUnique({
+                const user = await prisma.user.findUnique({
                     where: {
-                        email: credentials.email
+                        email: credentials?.email
                     }
                 });
-                if (!user) return null;
+                if (!user || !credentials?.password) return null;
                 const isValid = await __TURBOPACK__imported__module__$5b$externals$5d2f$bcrypt__$5b$external$5d$__$28$bcrypt$2c$__cjs$29$__["default"].compare(credentials.password, user.password);
                 if (!isValid) return null;
                 return {
                     id: user.id.toString(),
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: user.role
                 };
             }
         })
     ],
-    session: {
-        strategy: "jwt"
+    callbacks: {
+        async session ({ session, token }) {
+            if (token && session.user) {
+                session.user.id = token.sub ?? "";
+                session.user.role = token.role === "Admin" || token.role === "User" ? token.role : "User";
+            }
+            return session;
+        },
+        async jwt ({ token, user }) {
+            if (user) {
+                token.role = user.role;
+            }
+            return token;
+        }
     },
     pages: {
         signIn: "/login"
     },
-    callbacks: {
-        async jwt ({ token, user }) {
-            // Saat user login, inject role ke dalam token JWT
-            if (user) {
-                const dbUser = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].user.findUnique({
-                    where: {
-                        email: user.email
-                    }
-                });
-                token.role = dbUser?.role;
-            }
-            return token;
-        },
-        async session ({ session, token }) {
-            // Saat session dibuat, tambahkan role ke session.user
-            if (session.user) {
-                session.user.role = token.role;
-            }
-            return session;
-        }
-    }
+    session: {
+        strategy: "jwt"
+    },
+    secret: process.env.NEXTAUTH_SECRET
 };
 }),
 "[project]/app/api/property/route.ts [app-route] (ecmascript)": ((__turbopack_context__) => {

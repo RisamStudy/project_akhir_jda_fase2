@@ -1,18 +1,14 @@
 {
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/bookings/route": "app/api/bookings/route.js",
   "/api/bookings/update/route": "app/api/bookings/update/route.js",
-  "/api/property/[id]/route": "app/api/property/[id]/route.js",
   "/api/property/route": "app/api/property/route.js",
-  "/dashboard/admin/add-booking/page": "app/dashboard/admin/add-booking/page.js",
+  "/api/register/route": "app/api/register/route.js",
   "/dashboard/admin/page": "app/dashboard/admin/page.js",
   "/dashboard/bookings/create/page": "app/dashboard/bookings/create/page.js",
-  "/dashboard/bookings/page": "app/dashboard/bookings/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/dashboard/property/[id]/edit/page": "app/dashboard/property/[id]/edit/page.js",
-  "/dashboard/property/create/page": "app/dashboard/property/create/page.js",
   "/dashboard/property/page": "app/dashboard/property/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/login/page": "app/login/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/register/page": "app/register/page.js"
 }
