@@ -1,5 +1,28 @@
 {
-  "node": {},
+  "node": {
+    "40c77a9846d4a33c945298258be1357b5afb1616b4": {
+      "workers": {
+        "app/dashboard/admin/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/admin/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/deleteBooking.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/dashboard/admin/page": "action-browser"
+      }
+    },
+    "4011bb35e113d8224098e3214cdab47c9bc32e6170": {
+      "workers": {
+        "app/dashboard/property/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/property/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/deleteProperty.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/dashboard/property/page": "action-browser"
+      }
+    }
+  },
   "edge": {},
   "encryptionKey": "KFFHvm2+8xfJYVB65DN7zMRAFQjwmRanDHdZBb2cQbA="
 }

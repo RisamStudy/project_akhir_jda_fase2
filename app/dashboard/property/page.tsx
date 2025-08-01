@@ -1,16 +1,19 @@
+// HAPUS "use client"; dari paling atas file ini
+
 import { prisma } from "../../../lib/prisma";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
+import { DeleteButton } from "../../components/deletebutton";
 
 export default async function PropertyList() {
   const data = await prisma.property.findMany({ include: { owner: true } });
   const session = await getServerSession(authOptions);
 
   if (!session || session.user.role !== "Admin") {
-    return redirect("/dashboard"); // redirect user biasa
+    return redirect("/dashboard");
   }
 
   return (
@@ -48,20 +51,27 @@ export default async function PropertyList() {
                     {item.title}
                   </h2>
                   <p className="text-blue-600 font-bold mt-1">
-                    Rp{Number(item.price).toLocaleString()}
+                    {" "}
+                    Harga : Rp{Number(item.price).toLocaleString()}
                   </p>
                   <p className="text-gray-600 text-sm mt-3 line-clamp-3">
-                    {item.description}
+                    {" "}
+                    Description : {item.description}
+                  </p>
+                  <p className="text-gray-600 text-sm mt-3 line-clamp-3">
+                    {" "}
+                    ID Property : {item.id}
                   </p>
                 </div>
 
-                <div className="mt-5">
+                <div className="mt-5 flex gap-2">
                   <Link
                     href={`/dashboard/property/${item.id}/edit`}
                     className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-4 py-2 rounded-md transition"
                   >
                     Edit
                   </Link>
+                  <DeleteButton propertyId={item.id} />
                 </div>
               </div>
             </li>
