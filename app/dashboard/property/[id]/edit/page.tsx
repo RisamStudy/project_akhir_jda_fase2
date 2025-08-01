@@ -1,7 +1,8 @@
+import { type Metadata } from "next";
 import EditPropertyForm from "./EditPropertyForm";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "../../../../components/Navbar";
 
-export default function EditPropertyPage({
+export default async function EditPropertyPage({
   params,
 }: {
   params: { id: string };
