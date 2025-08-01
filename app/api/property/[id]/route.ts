@@ -1,17 +1,22 @@
 import { prisma } from "../../../../lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const { title, description, imageUrl, price } = await req.json();
-  const id = Number(params.id);
-  const updated = await prisma.property.update({
+export async function PUT(request: NextRequest) {
+  const idParam = request.nextUrl.pathname.split("/").pop();
+  const id = parseInt(idParam ?? "");
+
+  if (isNaN(id)) {
+    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+  }
+
+  const data = await request.json();
+
+  const updatedProperty = await prisma.property.update({
     where: { id },
-    data: { title, description, imageUrl, price },
+    data,
   });
-  return NextResponse.json(updated);
+
+  return NextResponse.json(updatedProperty);
 }
 
 export async function DELETE(
