@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 21, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/middleware.ts"],"sourcesContent":["import { withAuth } from \"next-auth/middleware\";\r\nimport { NextResponse } from \"next/server\";\r\n\r\nexport default withAuth({\r\n  pages: { signIn: \"/login\" },\r\n  callbacks: {\r\n    authorized({ token, req }) {\r\n      const path = req.nextUrl.pathname;\r\n\r\n      // Jika menuju ke /dashboard/property  harus admin\r\n      if (path.startsWith(\"/dashboard/property\")) {\r\n        return token?.role === \"Admin\";\r\n      }\r\n\r\n      if (path.startsWith(\"/dashboard/bookings\")) {\r\n        return token?.role === \"User\" || token?.role === \"Admin\";\r\n      }\r\n\r\n      return !!token; // default: asal sudah login\r\n    },\r\n  },\r\n});\r\n\r\nexport const config = {\r\n  matcher: [\"/dashboard/:path*\"],\r\n};\r\n"],"names":[],"mappings":";;;;AAAA;;uCAGe,CAAA,GAAA,8PAAA,CAAA,WAAQ,AAAD,EAAE;IACtB,OAAO;QAAE,QAAQ;IAAS;IAC1B,WAAW;QACT,YAAW,EAAE,KAAK,EAAE,GAAG,EAAE;YACvB,MAAM,OAAO,IAAI,OAAO,CAAC,QAAQ;YAEjC,kDAAkD;YAClD,IAAI,KAAK,UAAU,CAAC,wBAAwB;gBAC1C,OAAO,OAAO,SAAS;YACzB;YAEA,IAAI,KAAK,UAAU,CAAC,wBAAwB;gBAC1C,OAAO,OAAO,SAAS,UAAU,OAAO,SAAS;YACnD;YAEA,OAAO,CAAC,CAAC,OAAO,4BAA4B;QAC9C;IACF;AACF;AAEO,MAAM,SAAS;IACpB,SAAS;QAAC;KAAoB;AAChC"}}]
-}
