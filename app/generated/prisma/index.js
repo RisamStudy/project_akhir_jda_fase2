@@ -162,6 +162,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -179,6 +183,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -187,8 +192,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n//model User {\n//  id       Int    @id @default(autoincrement())\n//  name     String\n//  email    String @unique\n//  password String\n//  role     String @default(\"User\")\n//}\n\nenum UserRole {\n  USER\n  ADMIN\n}\n\nmodel User {\n  id         Int        @id @default(autoincrement())\n  name       String\n  email      String     @unique\n  password   String\n  role       String\n  properties Property[] // Relasi balik ke Property\n  bookings   Booking[]\n}\n\nmodel Property {\n  id          Int       @id @default(autoincrement())\n  name        String\n  location    String\n  ownerId     Int\n  owner       User      @relation(fields: [ownerId], references: [id])\n  bookings    Booking[]\n  title       String\n  description String\n  imageUrl    String\n  price       Decimal\n}\n\nmodel Booking {\n  id         Int      @id @default(autoincrement())\n  userId     Int\n  propertyId Int\n  status     String   @default(\"pending\")\n  property   Property @relation(fields: [propertyId], references: [id])\n  user       User     @relation(fields: [userId], references: [id])\n  startDate  DateTime\n  endDate    DateTime\n}\n",
-  "inlineSchemaHash": "121664773bb8061c447cb163e73b6e38275a48c235f4290bc4a0b731fd072965",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../app/generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n//model User {\n//  id       Int    @id @default(autoincrement())\n//  name     String\n//  email    String @unique\n//  password String\n//  role     String @default(\"User\")\n//}\n\nenum UserRole {\n  USER\n  ADMIN\n}\n\nmodel User {\n  id         Int        @id @default(autoincrement())\n  name       String\n  email      String     @unique\n  password   String\n  role       String\n  properties Property[] // Relasi balik ke Property\n  bookings   Booking[]\n}\n\nmodel Property {\n  id          Int       @id @default(autoincrement())\n  name        String\n  location    String\n  ownerId     Int\n  owner       User      @relation(fields: [ownerId], references: [id])\n  bookings    Booking[]\n  title       String\n  description String\n  imageUrl    String\n  price       Decimal\n}\n\nmodel Booking {\n  id         Int      @id @default(autoincrement())\n  userId     Int\n  propertyId Int\n  status     String   @default(\"pending\")\n  property   Property @relation(fields: [propertyId], references: [id])\n  user       User     @relation(fields: [userId], references: [id])\n  startDate  DateTime\n  endDate    DateTime\n}\n",
+  "inlineSchemaHash": "7626504e00a0b07350aabaaad1d9f4b9ea4dc495f8c53734ac74765e60eb1d25",
   "copyEngine": true
 }
 
@@ -229,6 +234,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "app/generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "app/generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "app/generated/prisma/schema.prisma")

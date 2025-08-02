@@ -23,10 +23,11 @@ export default function EditPropertyForm({ id }: Props) {
       .then((data) => setForm({ ...data, price: data.price.toString() }));
   }, [id]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await fetch(`/api/property/${id}`, {
       method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form, price: parseInt(form.price) }),
     });
     router.push("/dashboard/property");

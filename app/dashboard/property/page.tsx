@@ -3,9 +3,9 @@
 import { prisma } from "../../../lib/prisma";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "../../../lib/auth";
 import { redirect } from "next/navigation";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "../../../app/components/Navbar";
 import { DeleteButton } from "../../components/deletebutton";
 
 export default async function PropertyList() {
