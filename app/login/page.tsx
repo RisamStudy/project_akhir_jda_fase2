@@ -20,7 +20,6 @@ export default function Login() {
       console.log("Berhasil masuk");
       alert("Login berhasil!");
       router.push("/dashboard");
-      // app\api\dashboard\page.tsx
     } else {
       let errorMsg = "Login gagal";
       if (res?.error) {
